@@ -30,9 +30,35 @@ export function calculateInvestmentResults({
 // The browser-provided Intl API is used to prepare a formatter object
 // This object offers a "format()" method that can be used to format numbers as currency
 // Example Usage: formatter.format(1000) => yields "$1,000"
-export const formatter = new Intl.NumberFormat('en-US', {
-  style: 'currency',
-  currency: 'USD',
+export const formatter = new Intl.NumberFormat("en-US", {
+  style: "currency",
+  currency: "USD",
   minimumFractionDigits: 0,
   maximumFractionDigits: 0,
 });
+
+export function validateUserInput({
+  initialInvestment,
+  annualInvestment,
+  expectedReturn,
+  duration,
+}) {
+  let errors = {};
+  if (+duration <= 0) {
+    errors.duration = "Duration must be greater than 0";
+  }
+
+  if (+initialInvestment < 0) {
+    errors.initialInvestment = "Initial Investment must be greater than 0";
+  }
+
+  if (+annualInvestment < 0) {
+    errors.annualInvestment = "Annual Investment must be greater than 0";
+  }
+
+  if (+expectedReturn < 0) {
+    errors.expectedReturn = "Expected Return must be greater than 0";
+  }
+
+  return errors;
+}
